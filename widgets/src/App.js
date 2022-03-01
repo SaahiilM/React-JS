@@ -1,17 +1,19 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React from "react";
 import Accordion from "./components/Accordion";
+import Search from "./components/Search";
 
 const items = [
   {
-    title: "Whatis React ?",
+    title: "What is React ?",
     content: "asdha",
   },
   {
-    title: "Whatis html ?",
+    title: "What is html ?",
     content: "asdha",
   },
   {
-    title: "Whatis css ?",
+    title: "What is css ?",
     content: "asdha",
   },
 ];
@@ -19,7 +21,8 @@ const items = [
 export default () => {
   return (
     <div>
-      <Accordion items={items} />
+      {/* <Accordion items={items} /> */}
+      <Search />
     </div>
   );
 };
