@@ -1,12 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Route = ({ path, children }) => {
-  //defined as separate callback function to cleanup later
-  const onLocationChange = () => {
-    console.log("Location Changed");
-  };
+  //state that follows or tracks the window.location.pathname to rerender Route component
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
+    //defined as separate callback function to cleanup later
+    const onLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
     window.addEventListener("popstate", onLocationChange);
 
     // to clean up eventListner
@@ -14,7 +17,7 @@ const Route = ({ path, children }) => {
       window.removeEventListener("popstate", onLocationChange);
     };
   }, []);
-  return window.location.pathname === path ? children : null;
+  return currentPath === path ? children : null;
 };
 
 export default Route;
