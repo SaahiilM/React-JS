@@ -25,7 +25,7 @@ const App = () => {
     // });
 
     setVideo(response.data.items);
-    selectedVideo(response.data.items[0]);
+    setSelectedVideo(response.data.items[0]);
   };
 
   // onVideoSelect = (video) => {
