@@ -6,7 +6,7 @@ const useVideos = (defaultSearchTerm) => {
 
   useEffect(() => {
     search(defaultSearchTerm);
-  }, []);
+  }, [defaultSearchTerm]); //solve useEffect react dependency
 
   const search = async (term) => {
     const response = await youtube.get("/search", { params: { q: term } });
@@ -21,6 +21,7 @@ const useVideos = (defaultSearchTerm) => {
 
   //return as an array
   return [videos, search];
+
   //return as object
   //return {videos, onTermSubmit}
 };
