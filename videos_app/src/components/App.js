@@ -31,9 +31,11 @@ const App = () => {
   // onVideoSelect = (video) => {
   //   this.setState({ selectedVideo: video });
   // };
-  const onVideoSelect = (video) => {
-    setSelectedVideo(video);
-  };
+
+  // const onVideoSelect = (video) => {
+  //   setSelectedVideo(video);
+  // };
+  //refactored to be inline line 53
 
   return (
     <div className="ui container">
@@ -48,7 +50,7 @@ const App = () => {
           <div className="five wide column">
             <VideoList
               // onVideoSelect={this.onVideoSelect}
-              onVideoSelect={onVideoSelect}
+              onVideoSelect={setSelectedVideo}
               // videoss={this.state.videos}
               videoss={videos}
             />
