@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
-import youtube from "../api/youtube";
 import VideoList from "./VideoList.";
 import VideoDetails from "./VideoDetails";
+import useVideos from "../hooks/useVideos";
 
 const App = () => {
   // state = { videos: [], selectedVideo: null };
-  const [videos, setVideo] = useState([]);
+
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // componentDidMount() {
   //   this.onTermSubmit("latest");
   // }
+
+  const [videos, serach] = useVideos("latest");
+
   useEffect(() => {
-    onTermSubmit("latest");
-  }, []);
+    setSelectedVideo(videos[0]);
 
-  const onTermSubmit = async (term) => {
-    const response = await youtube.get("/search", { params: { q: term } });
-
-    // this.setState({
-    //   videos: response.data.items,
-    //   selectedVideo: response.data.items[0],
-    // });
-
-    setVideo(response.data.items);
-    setSelectedVideo(response.data.items[0]);
-  };
+    //reRender when we get a new list of videos
+  }, [videos]);
 
   // onVideoSelect = (video) => {
   //   this.setState({ selectedVideo: video });
@@ -40,7 +33,7 @@ const App = () => {
   return (
     <div className="ui container">
       {/* <SearchBar onFormSubmit={this.onTermSubmit} /> */}
-      <SearchBar onFormSubmit={onTermSubmit} />
+      <SearchBar onFormSubmit={serach} />
       <div className="ui grid">
         <div className="ui row">
           <div className="eleven wide column">
