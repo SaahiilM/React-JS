@@ -1,0 +1,89 @@
+console.clear();
+//people dropping form
+
+const createPolicy =(name, amount)=>{
+  return{
+    //Action(a form)
+    type: 'CREATE_POLICY',
+    payload:{
+      name:name,
+      amount:amount
+    }
+  };
+}
+
+const deletePolicy =(name)=>{
+  return {
+    type:'DELETE_POLICY',
+    payload:{
+      name:name
+    }
+  };
+}
+
+const createClaim =(name,amountTobeCollected)=>{
+  return {
+    type:'CREATE_CLAIM',
+    payload:{
+      name:name,
+      amountTobeCollected:amountTobeCollected
+    }
+  };
+}
+
+//Reducers (Department)
+
+const claimHistory =(oldListOfClaims =[],action)=>{
+  if(action.type ==='CREATE_CLAIM'){
+    //we want to process it
+    
+    //... -> take all records inside oldListOfCollection and add to new array with payload added to it
+    return [...oldListOfClaims,action.payload];
+  }
+  
+  //we do not want to process
+  return oldListOfClaims;
+}
+
+const accounting = (bagOfMoney = 100,action)=>{
+  if (action.type ==='CREATE_CLAIM'){
+    return bagOfMoney - action.payload.amountTobeCollected;
+  } else if(action.type === 'CREATE_POLICY'){
+    return bagOfMoney + action.payload.amount;
+  }
+  return bagOfMoney;
+}
+
+
+const policies = (listOfPolicies =[],action)=>{
+  if(action.type==='CREATE_POLICY'){
+    return [...listOfPolicies,action.payload.name];
+  } else if(action.type === 'DELETE_POLICY'){
+    //.filter is used to display array without the value passed
+    return listOfPolicies.filter(name => name!==action.payload.name);
+  }
+ return listOfPolicies;
+ };
+
+
+
+const {createStore, combineReducers} = Redux;
+
+const ourDepartments = combineReducers({
+  accounting:accounting,
+  claimsHistory:claimHistory,
+  policies:policies
+});
+
+const store = createStore(ourDepartments);
+
+store.dispatch(createPolicy('Alex',20));
+store.dispatch(createPolicy('Bob',50));
+store.dispatch(createPolicy('Jim',30));
+
+store.dispatch(createClaim('Alex',100));
+store.dispatch(createClaim('Bob',70));
+
+store.dispatch(deletePolicy('Jim'));
+
+console.log(store.getState())
