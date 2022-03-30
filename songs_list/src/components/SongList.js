@@ -7,6 +7,13 @@ class SongList extends React.Component {
   }
 }
 
-export default connect()(SongList);
+//take state object , do something and give out props
+const mapStateToProps = (state) => {
+  return {
+    songs: state.songs,
+  };
+};
+
+export default connect(mapStateToProps)(SongList);
 //connect() returns a function
 //the next () calss the returned function with SongList parameter
