@@ -15,11 +15,16 @@ export const fetchPostsAndUsers = () => async (dispatch, getState) => {
   await dispatch(fetchPosts());
   //wait for the api request of inner action creator to execute
 
-  //find unique userId
-  const userIds = _.uniq(_.map(getState().posts, "userId"));
+  // //find unique userId
+  // const userIds = _.uniq(_.map(getState().posts, "userId"));
+  // //iterate over unique userId and call fetchUser action creator
+  // userIds.forEach((id) => dispatch(fetchUser(id)));
 
-  //iterate over unique userId and call fetchUser action creator
-  userIds.forEach((id) => dispatch(fetchUser(id)));
+  _.chain(getState().posts)
+    .map("userId") // arguement from chain() is passed as first arguement
+    .uniq() //result of map() is passed to this method
+    .forEach((id) => dispatch(fetchUser(id))) //result of uniq() is processed here
+    .value(); //executes all the steps only if value() is called as per lodash
 };
 
 export const fetchPosts = () => async (dispatch) => {
