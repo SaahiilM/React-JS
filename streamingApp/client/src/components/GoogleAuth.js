@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { signIn, signOut } from "../actions";
 
 class GoogleAuth extends React.Component {
-  state = { isSignedIn: null };
+  // state = { isSignedIn: null };
   componentDidMount() {
     //   to get variable gapi available on window scope
     // callback function execute after getting the access of gapi library
@@ -67,4 +67,10 @@ class GoogleAuth extends React.Component {
   }
 }
 
-export default connect(null, { signIn, signOut })(GoogleAuth);
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn: state.auth.isSignedIn,
+  };
+};
+
+export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
