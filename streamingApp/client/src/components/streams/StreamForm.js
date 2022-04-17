@@ -1,5 +1,6 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form"; //Field is component that shows up on screen, reduxForm is a function similar to connect()
+// import { Field, reduxForm } from "redux-form"; //Field is component that shows up on screen, reduxForm is a function similar to connect()
+import { Form, Field } from "react-final-form";
 
 class StreamForm extends React.Component {
   renderError({ error, touched }) {
@@ -38,32 +39,49 @@ class StreamForm extends React.Component {
   render() {
     return (
       // handleSubmit() is provided by redux-form
-      <form
-        className="ui form error"
-        onSubmit={this.props.handleSubmit(this.onSubmit)}
-      >
-        <Field name="title" component={this.renderInput} label="Enter Title" />
-        <Field
-          name="description"
-          component={this.renderInput}
-          label="Enter Description"
-        />
-        <button className="ui button primary">Submit</button>
-      </form>
+      <Form
+        initialValues={this.props.initialValues}
+        onSubmit={this.onSubmit}
+        validate={(formValues) => {
+          const errors = {};
+          if (!formValues.title) {
+            errors.title = "Title required";
+          }
+          if (!formValues.description) {
+            errors.description = "Description required";
+          }
+          return errors;
+        }}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit} className="ui form error">
+            <Field
+              name="title"
+              component={this.renderInput}
+              label="Enter Title"
+            />
+            <Field
+              name="description"
+              component={this.renderInput}
+              label="Enter Description"
+            />
+            <button className="ui button primary">Submit</button>
+          </form>
+        )}
+      />
     );
   }
 }
 
-const validate = (formValues) => {
-  const errors = {};
-  if (!formValues.title) {
-    errors.title = "Title required";
-  }
-  if (!formValues.description) {
-    errors.description = "Description required";
-  }
-  return errors;
-};
+// const validate = (formValues) => {
+//   const errors = {};
+//   if (!formValues.title) {
+//     errors.title = "Title required";
+//   }
+//   if (!formValues.description) {
+//     errors.description = "Description required";
+//   }
+//   return errors;
+// };
 
 // export default reduxForm({
 //   form: "streamCreate", //purpose of the form
@@ -71,7 +89,4 @@ const validate = (formValues) => {
 // })(StreamCreate);
 
 //to use the connect() and reduxForm() together
-export default reduxForm({
-  form: "streamForm", //purpose of the form
-  validate: validate, //key for validation
-})(StreamForm);
+export default StreamForm;
