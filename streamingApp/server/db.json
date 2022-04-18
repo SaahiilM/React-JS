@@ -1,3 +1,21 @@
 {
-    "streams": []
+  "streams": [
+    {
+      "title": "My Stream",
+      "description": "this is a test stream",
+      "id": 1
+    },
+    {
+      "title": "New Stream",
+      "description": "This was made with a logged in user",
+      "userId": "115810686669610533786",
+      "id": 2
+    },
+    {
+      "title": "unexpected test",
+      "description": "something unexpected",
+      "userId": "115810686669610533786",
+      "id": 3
+    }
+  ]
 }
